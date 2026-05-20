@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Concessionária</title>
+</head>
+
+<body>
+
+    <h1>Lista de Carros</h1>
+
+    {% for carro in carros %}
+
+        <div>
+            <h2>{{ carro.marca }} {{ carro.modelo }}</h2>
+
+            <p>Ano: {{ carro.ano }}</p>
+
+            <p>Preço: R$ {{ carro.preco }}</p>
+
+            <p>{{ carro.descricao }}</p>
+        </div>
+
+        <hr>
+
+    {% endfor %}
+
+</body>
+
+</html>
