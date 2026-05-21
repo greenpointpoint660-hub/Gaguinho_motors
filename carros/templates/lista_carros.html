@@ -1,29 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Concessionária</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 
-    <h1>Lista de Carros</h1>
+    <header>
+        <h1>Concessionária Premium</h1>
 
-    {% for carro in carros %}
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Carros</a>
+            <a href="#">Contato</a>
+        </nav>
+    </header>
 
-        <div>
-            <h2>{{ carro.marca }} {{ carro.modelo }}</h2>
+    <section class="banner">
+        <h2>Encontre o carro ideal</h2>
+        <p>Os melhores veículos com os melhores preços.</p>
+    </section>
 
-            <p>Ano: {{ carro.ano }}</p>
+    <section class="produtos">
 
-            <p>Preço: R$ {{ carro.preco }}</p>
+        {% for carro in carros %}
 
-            <p>{{ carro.descricao }}</p>
+        <div class="card">
+
+            <!-- Imagem padrão -->
+            <img src="https://via.placeholder.com/300x180" alt="Carro">
+
+            <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
+
+            <p>R$ {{ carro.preco }}</p>
+
+            <div class="info">
+                <span>Ano: {{ carro.ano }}</span>
+            </div>
+
+            <div class="descricao">
+                {{ carro.descricao }}
+            </div>
+
+            <button>Ver Detalhes</button>
+
         </div>
 
-        <hr>
+        {% endfor %}
 
-    {% endfor %}
+    </section>
 
 </body>
 
