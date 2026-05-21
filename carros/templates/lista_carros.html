@@ -1,63 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Carros | Gaguinho Motors{% endblock %}
 
-    <title>Concessionária</title>
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Gaguinho Motors</p>
+        <h1>Carros à venda</h1>
+        <p class="lead">Veja, cadastre e atualize os veículos disponíveis na loja.</p>
+    </div>
+    <a class="button button-primary" href="{% url 'criar_carro' %}">Cadastrar carro</a>
+</section>
 
-    {% load static %}
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-
-<body>
-
-    <header>
-        <h1>Concessionária Premium</h1>
-
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Carros</a>
-            <a href="#">Contato</a>
-        </nav>
-    </header>
-
-    <section class="banner">
-        <h2>Encontre o carro ideal</h2>
-        <p>Os melhores veículos com os melhores preços.</p>
-    </section>
-
-    <section class="produtos">
-
+{% if carros %}
+    <section class="vehicle-grid" aria-label="Lista de carros">
         {% for carro in carros %}
-
-        <div class="card">
-
-            <!-- Imagem padrão -->
-            <img src="https://via.placeholder.com/300x180" alt="Carro">
-
-            <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
-
-            <p>R$ {{ carro.preco }}</p>
-
-            <div class="info">
-                <span>Ano: {{ carro.ano }}</span>
-            </div>
-
-            <div class="descricao">
-                {{ carro.descricao }}
-            </div>
-
-            <button>Ver Detalhes</button>
-
-        </div>
-
+            <article class="vehicle-card">
+                <div class="vehicle-cover">
+                    <span>{{ carro.marca|slice:":1" }}{{ carro.modelo|slice:":1" }}</span>
+                </div>
+                <div class="vehicle-body">
+                    <div>
+                        <p class="vehicle-year">{{ carro.ano }}</p>
+                        <h2>{{ carro.marca }} {{ carro.modelo }}</h2>
+                    </div>
+                    <p class="price">R$ {{ carro.preco }}</p>
+                    <p class="description">{{ carro.descricao|truncatewords:18 }}</p>
+                    <div class="card-actions">
+                        <a class="button button-secondary" href="{% url 'detalhe_carro' carro.pk %}">Detalhes</a>
+                        <a class="button button-ghost" href="{% url 'editar_carro' carro.pk %}">Editar</a>
+                    </div>
+                </div>
+            </article>
         {% endfor %}
-
     </section>
-
-</body>
-
-</html>
+{% else %}
+    <section class="empty-state">
+        <h2>Nenhum carro cadastrado</h2>
+        <p>Cadastre o primeiro veículo para começar a montar sua vitrine.</p>
+        <a class="button button-primary" href="{% url 'criar_carro' %}">Cadastrar agora</a>
+    </section>
+{% endif %}
+{% endblock %}

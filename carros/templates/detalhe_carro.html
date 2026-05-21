@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ carro }} | Gaguinho Motors{% endblock %}
+
+{% block content %}
+<section class="detail-layout">
+    <div class="detail-cover">
+        <span>{{ carro.marca|slice:":1" }}{{ carro.modelo|slice:":1" }}</span>
+    </div>
+
+    <article class="detail-card">
+        <p class="eyebrow">Detalhes do carro</p>
+        <h1>{{ carro.marca }} {{ carro.modelo }}</h1>
+        <p class="price detail-price">R$ {{ carro.preco }}</p>
+
+        <dl class="specs">
+            <div>
+                <dt>Ano</dt>
+                <dd>{{ carro.ano }}</dd>
+            </div>
+            <div>
+                <dt>Marca</dt>
+                <dd>{{ carro.marca }}</dd>
+            </div>
+            <div>
+                <dt>Modelo</dt>
+                <dd>{{ carro.modelo }}</dd>
+            </div>
+        </dl>
+
+        <div class="detail-description">
+            <h2>Descrição</h2>
+            <p>{{ carro.descricao }}</p>
+        </div>
+
+        <div class="detail-actions">
+            <a class="button button-secondary" href="{% url 'lista_carros' %}">Voltar</a>
+            <a class="button button-primary" href="{% url 'editar_carro' carro.pk %}">Editar</a>
+            <form method="post" action="{% url 'excluir_carro' carro.pk %}">
+                {% csrf_token %}
+                <button class="button button-danger" type="submit">Excluir</button>
+            </form>
+        </div>
+    </article>
+</section>
+{% endblock %}
