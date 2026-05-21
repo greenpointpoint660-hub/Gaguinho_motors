@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Admin | Gaguinho Motors{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Área da loja</h1>
+        <p class="lead">Atalhos simples para cuidar dos carros cadastrados.</p>
+    </div>
+</section>
+
+<section class="admin-actions">
+    <a class="button button-primary" href="{% url 'criar_carro' %}">Cadastrar carro</a>
+    <a class="button button-secondary" href="{% url 'lista_carros' %}">Ver carros</a>
+    <a class="button button-secondary" href="/admin/">Abrir admin do Django</a>
+</section>
+{% endblock %}

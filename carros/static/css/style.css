@@ -120,6 +120,7 @@ dt {
 }
 
 .page-heading h1,
+.hero h1,
 .form-panel h1,
 .detail-card h1 {
     margin: 6px 0 8px;
@@ -133,6 +134,56 @@ dt {
 .detail-description p {
     color: var(--muted);
     font-size: 1.05rem;
+}
+
+.hero {
+    min-height: 420px;
+    display: grid;
+    align-items: center;
+    margin-bottom: 36px;
+    padding: clamp(28px, 7vw, 74px);
+    border-radius: 8px;
+    color: #fff;
+    background:
+        linear-gradient(135deg, rgba(249, 115, 22, 0.88), transparent 58%),
+        linear-gradient(135deg, var(--blue), var(--blue-dark));
+    box-shadow: var(--shadow);
+}
+
+.hero h1 {
+    max-width: 760px;
+    color: #fff;
+}
+
+.hero .eyebrow,
+.hero .lead {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-actions,
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 10px 0 18px;
+}
+
+.section-heading h2 {
+    margin: 0;
+}
+
+.section-heading a,
+.form-note a {
+    color: var(--blue);
+    font-weight: 800;
 }
 
 .button {
@@ -212,7 +263,15 @@ dt {
 
 .vehicle-cover {
     min-height: 154px;
-    font: 700 3.6rem "Archivo", sans-serif;
+    padding: 18px;
+    text-align: center;
+    font: 700 clamp(2rem, 5vw, 3.6rem) "Archivo", sans-serif;
+    line-height: 1;
+}
+
+.vehicle-cover span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .vehicle-body {
@@ -340,6 +399,49 @@ dt {
     margin: 0;
 }
 
+.card-actions form,
+.cart-item form,
+.cart-total form {
+    margin: 0;
+}
+
+.cart-list {
+    display: grid;
+    gap: 12px;
+}
+
+.cart-item,
+.cart-total {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.cart-item strong,
+.cart-total strong {
+    display: block;
+    font-family: "Archivo", sans-serif;
+    font-size: 1.15rem;
+}
+
+.cart-item span,
+.cart-total span,
+.form-note {
+    color: var(--muted);
+}
+
+.cart-total {
+    margin-top: 16px;
+    border-bottom: none;
+}
+
+.admin-actions {
+    padding-top: 10px;
+}
+
 @media (max-width: 860px) {
     .topbar,
     .page-heading {
@@ -364,7 +466,9 @@ dt {
     .vehicle-grid,
     .form-layout,
     .detail-layout,
-    .specs {
+    .specs,
+    .cart-item,
+    .cart-total {
         grid-template-columns: 1fr;
     }
 

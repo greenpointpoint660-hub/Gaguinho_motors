@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Login | Gaguinho Motors{% endblock %}
+
+{% block content %}
+<section class="form-layout auth-layout">
+    <aside class="form-panel">
+        <p class="eyebrow">Minha conta</p>
+        <h1>Entrar</h1>
+        <p>Use seu usuário e senha para continuar sua compra.</p>
+    </aside>
+
+    <form class="vehicle-form" method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="form-errors">{{ form.non_field_errors|striptags }}</div>
+        {% endif %}
+        {% for field in form %}
+            <div class="field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <small class="field-error">{{ field.errors|striptags }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button class="button button-primary" type="submit">Entrar</button>
+        <p class="form-note">Ainda não tem conta? <a href="{% url 'cadastro' %}">Cadastrar</a></p>
+    </form>
+</section>
+{% endblock %}

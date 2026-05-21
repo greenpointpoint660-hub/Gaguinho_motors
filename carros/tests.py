@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from .models import Carro
 
@@ -19,6 +20,13 @@ class CarroViewsTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Ford Mustang")
+        self.assertContains(response, "R$ 240.000,00")
+
+    def test_home_exibe_pagina_inicial(self):
+        response = self.client.get(reverse("home"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Seu próximo carro")
 
     def test_criar_carro_salva_no_banco(self):
         response = self.client.post(
@@ -56,3 +64,39 @@ class CarroViewsTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Carro.objects.filter(pk=self.carro.pk).exists())
+
+    def test_carrinho_adiciona_carro(self):
+        response = self.client.post(reverse("adicionar_carrinho", args=[self.carro.pk]))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(str(self.carro.pk), self.client.session["carrinho"])
+
+    def test_cadastro_cria_usuario(self):
+        response = self.client.post(
+            reverse("cadastro"),
+            {
+                "username": "aluno",
+                "email": "aluno@example.com",
+                "password1": "senha-forte-123",
+                "password2": "senha-forte-123",
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_painel_admin_exige_usuario_admin(self):
+        response = self.client.get(reverse("painel_admin"))
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_painel_admin_abre_para_staff(self):
+        usuario = User.objects.create_user(
+            username="admin_teste",
+            password="senha-forte-123",
+            is_staff=True,
+        )
+        self.client.force_login(usuario)
+
+        response = self.client.get(reverse("painel_admin"))
+
+        self.assertEqual(response.status_code, 200)

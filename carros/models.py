@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Carro(models.Model):
     marca = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100)
@@ -9,3 +10,7 @@ class Carro(models.Model):
 
     def __str__(self):
         return f"{self.marca} {self.modelo}"
+
+    @property
+    def preco_formatado(self):
+        return f"{self.preco:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")

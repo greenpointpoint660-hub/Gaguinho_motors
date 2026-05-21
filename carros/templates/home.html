@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}Carros | Gaguinho Motors{% endblock %}
+{% block title %}Home | Gaguinho Motors{% endblock %}
 
 {% block content %}
-<section class="page-heading">
+<section class="hero">
     <div>
         <p class="eyebrow">Gaguinho Motors</p>
-        <h1>Carros à venda</h1>
-        <p class="lead">Veja, cadastre e atualize os veículos disponíveis na loja.</p>
+        <h1>Seu próximo carro pode estar aqui.</h1>
+        <p class="lead">Veja os veículos disponíveis, escolha um modelo e simule sua compra pelo carrinho.</p>
+        <div class="hero-actions">
+            <a class="button button-primary" href="{% url 'lista_carros' %}">Ver carros</a>
+            <a class="button button-secondary" href="{% url 'cadastro' %}">Criar conta</a>
+        </div>
     </div>
-    <a class="button button-primary" href="{% url 'criar_carro' %}">Cadastrar carro</a>
 </section>
 
 {% if carros %}
-    <section class="vehicle-grid" aria-label="Lista de carros">
+    <section class="section-heading">
+        <h2>Últimos carros cadastrados</h2>
+        <a href="{% url 'lista_carros' %}">Ver todos</a>
+    </section>
+
+    <section class="vehicle-grid" aria-label="Últimos carros">
         {% for carro in carros %}
             <article class="vehicle-card">
                 <div class="vehicle-cover">
@@ -25,7 +33,6 @@
                         <h2>{{ carro.marca }} {{ carro.modelo }}</h2>
                     </div>
                     <p class="price">R$ {{ carro.preco_formatado }}</p>
-                    <p class="description">{{ carro.descricao|truncatewords:18 }}</p>
                     <div class="card-actions">
                         <a class="button button-secondary" href="{% url 'detalhe_carro' carro.pk %}">Detalhes</a>
                         <form method="post" action="{% url 'adicionar_carrinho' carro.pk %}">
@@ -36,12 +43,6 @@
                 </div>
             </article>
         {% endfor %}
-    </section>
-{% else %}
-    <section class="empty-state">
-        <h2>Nenhum carro cadastrado</h2>
-        <p>Cadastre o primeiro veículo para começar a montar sua vitrine.</p>
-        <a class="button button-primary" href="{% url 'criar_carro' %}">Cadastrar agora</a>
     </section>
 {% endif %}
 {% endblock %}

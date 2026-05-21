@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Carrinho | Gaguinho Motors{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Compra</p>
+        <h1>Carrinho</h1>
+        <p class="lead">Confira os carros escolhidos antes de finalizar.</p>
+    </div>
+</section>
+
+{% if carros %}
+    <section class="cart-list">
+        {% for carro in carros %}
+            <article class="cart-item">
+                <div>
+                    <strong>{{ carro.marca }} {{ carro.modelo }}</strong>
+                    <span>{{ carro.ano }}</span>
+                </div>
+                <p class="price">R$ {{ carro.preco_formatado }}</p>
+                <form method="post" action="{% url 'remover_carrinho' carro.pk %}">
+                    {% csrf_token %}
+                    <button class="button button-secondary" type="submit">Remover</button>
+                </form>
+            </article>
+        {% endfor %}
+    </section>
+
+    <section class="cart-total">
+        <span>Total</span>
+        <strong>R$ {{ total_formatado }}</strong>
+        <form method="post" action="{% url 'finalizar_compra' %}">
+            {% csrf_token %}
+            <button class="button button-primary" type="submit">Fechar compra</button>
+        </form>
+    </section>
+{% else %}
+    <section class="empty-state">
+        <h2>Seu carrinho está vazio</h2>
+        <p>Escolha um carro para iniciar a compra.</p>
+        <a class="button button-primary" href="{% url 'lista_carros' %}">Ver carros</a>
+    </section>
+{% endif %}
+{% endblock %}

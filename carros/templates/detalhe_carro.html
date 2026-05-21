@@ -11,7 +11,7 @@
     <article class="detail-card">
         <p class="eyebrow">Detalhes do carro</p>
         <h1>{{ carro.marca }} {{ carro.modelo }}</h1>
-        <p class="price detail-price">R$ {{ carro.preco }}</p>
+        <p class="price detail-price">R$ {{ carro.preco_formatado }}</p>
 
         <dl class="specs">
             <div>
@@ -35,7 +35,11 @@
 
         <div class="detail-actions">
             <a class="button button-secondary" href="{% url 'lista_carros' %}">Voltar</a>
-            <a class="button button-primary" href="{% url 'editar_carro' carro.pk %}">Editar</a>
+            <form method="post" action="{% url 'adicionar_carrinho' carro.pk %}">
+                {% csrf_token %}
+                <button class="button button-primary" type="submit">Comprar</button>
+            </form>
+            <a class="button button-ghost" href="{% url 'editar_carro' carro.pk %}">Editar</a>
             <form method="post" action="{% url 'excluir_carro' carro.pk %}">
                 {% csrf_token %}
                 <button class="button button-danger" type="submit">Excluir</button>
