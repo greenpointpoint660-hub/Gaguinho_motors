@@ -1,2 +1,2 @@
 # Gaguinho_motors
-afilial da MM motors de gravatá
+a filial da MM motors de Gravatá
